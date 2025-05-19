@@ -1,0 +1,132 @@
+{
+  "modules": [
+    {
+      "id": "module1",
+      "title": "Introduction to AI for Document Processing & Collaboration",
+      "description": "Learn the fundamentals of AI-powered document processing and how it transforms collaboration workflows.",
+      "icon": "🔍",
+      "duration": "30 minutes",
+      "level": "Beginner",
+      "sections": [
+        "AI in Document Processing: An Overview",
+        "Key Technologies and Capabilities",
+        "Business Value and Use Cases",
+        "Getting Started with AI Document Tools"
+      ],
+      "resources": [
+        {
+          "title": "AI Document Processing Guide",
+          "url": "#"
+        },
+        {
+          "title": "Industry Case Studies",
+          "url": "#"
+        }
+      ],
+      "next": "module2"
+    },
+    {
+      "id": "module2",
+      "title": "Document Classification & Data Extraction with AI",
+      "description": "Explore how AI can automatically classify documents and extract valuable data from various formats.",
+      "icon": "📄",
+      "duration": "45 minutes",
+      "level": "Intermediate",
+      "sections": [
+        "Document Classification Fundamentals",
+        "Extraction Techniques for Structured Documents",
+        "Working with Semi-Structured Content",
+        "Validation and Quality Control"
+      ],
+      "resources": [
+        {
+          "title": "Classification Model Guide",
+          "url": "#"
+        },
+        {
+          "title": "Extraction Techniques",
+          "url": "#"
+        }
+      ],
+      "prev": "module1",
+      "next": "module3"
+    },
+    {
+      "id": "module3",
+      "title": "Document Summarization & Task Automation",
+      "description": "Learn how AI can summarize lengthy documents and automate routine document-related tasks.",
+      "icon": "📝",
+      "duration": "40 minutes",
+      "level": "Intermediate",
+      "sections": [
+        "Document Summarization Techniques",
+        "Extractive vs. Abstractive Approaches",
+        "Task Identification and Automation",
+        "Building Automated Workflows"
+      ],
+      "resources": [
+        {
+          "title": "Summarization Best Practices",
+          "url": "#"
+        },
+        {
+          "title": "Workflow Automation Guide",
+          "url": "#"
+        }
+      ],
+      "prev": "module2",
+      "next": "module4"
+    },
+    {
+      "id": "module4",
+      "title": "Security, Compliance, and Governance in AI Workflows",
+      "description": "Understand the critical security and compliance considerations when implementing AI document solutions.",
+      "icon": "🔒",
+      "duration": "35 minutes",
+      "level": "Advanced",
+      "sections": [
+        "Security Fundamentals for AI Document Systems",
+        "Regulatory Compliance Frameworks",
+        "Data Privacy and Protection",
+        "Governance Best Practices"
+      ],
+      "resources": [
+        {
+          "title": "AI Security Checklist",
+          "url": "#"
+        },
+        {
+          "title": "Compliance Guide",
+          "url": "#"
+        }
+      ],
+      "prev": "module3",
+      "next": "module5"
+    },
+    {
+      "id": "module5",
+      "title": "Integrating with Productivity Tools",
+      "description": "Discover how to integrate AI document capabilities with Microsoft 365, Google Workspace, and other productivity platforms.",
+      "icon": "🔄",
+      "duration": "50 minutes",
+      "level": "Advanced",
+      "sections": [
+        "Integration Patterns and Approaches",
+        "Microsoft 365 Integration",
+        "Google Workspace Integration",
+        "Custom API Development"
+      ],
+      "resources": [
+        {
+          "title": "Integration Patterns",
+          "url": "#"
+        },
+        {
+          "title": "API Documentation",
+          "url": "#"
+        }
+      ],
+      "prev": "module4"
+    }
+  ]
+}

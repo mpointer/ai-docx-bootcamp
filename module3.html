@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Document Summarization & Task Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --background-color: #f9fafb;
+            --card-color: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Module Content */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: var(--light-text);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-icon {
+            font-size: 3.5rem;
+            margin-right: 2rem;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-description {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .module-meta span {
+            display: inline-flex;
+            align-items: center;
+            color: var(--light-text);
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-sidebar {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            align-self: start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-nav {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .section-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-box {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .resources-box ul {
+            list-style: none;
+        }
+
+        .resources-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .module-body {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .btn.prev {
+            background-color: var(--light-text);
+        }
+
+        .btn.next {
+            background-color: var(--success-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .module-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .module-meta {
+                justify-content: center;
+            }
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--background-color);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Code block styles */
+        pre {
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: monospace;
+        }
+
+        code {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Docx Builder Bootcamp</h1>
+            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+        </div>
+    </header>
+
+    <main class="container module-content">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> &gt; <span>Document Summarization & Task Automation</span>
+        </nav>
+
+        <div class="module-header">
+            <div class="module-icon">📝</div>
+            <div class="module-info">
+                <h2>Document Summarization & Task Automation</h2>
+                <p class="module-description">Learn how AI can summarize lengthy documents and automate routine document-related tasks.</p>
+                <div class="module-meta">
+                    <span class="duration">Duration: 40 minutes</span>
+                    <span class="level">Level: Intermediate</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <aside class="module-sidebar">
+                <h3>Module Sections</h3>
+                <ul class="section-nav">
+                    <li><a href="#section-1">Document Summarization Techniques</a></li>
+                    <li><a href="#section-2">Extractive vs. Abstractive Approaches</a></li>
+                    <li><a href="#section-3">Task Identification and Automation</a></li>
+                    <li><a href="#section-4">Building Automated Workflows</a></li>
+                </ul>
+                
+                <div class="resources-box">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Summarization Best Practices</a></li>
+                        <li><a href="#">Workflow Automation Guide</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <article class="module-body">
+                <h2 id="section-1">Document Summarization Techniques</h2>
+
+                <p>Document summarization is the process of creating concise, coherent versions of longer documents while preserving key information and meaning. As organizations face increasing document volumes, effective summarization becomes critical for knowledge management, decision-making, and information processing.</p>
+
+                <h3>The Need for Document Summarization</h3>
+
+                <p>Several factors drive the need for automated summarization:</p>
+
+                <ul>
+                    <li><strong>Information Overload</strong>: Professionals face an ever-growing volume of documents requiring review</li>
+                    <li><strong>Time Constraints</strong>: Limited time to process lengthy documents thoroughly</li>
+                    <li><strong>Knowledge Distribution</strong>: Need to share key insights across teams without full document sharing</li>
+                    <li><strong>Multi-document Analysis</strong>: Requirement to synthesize information across multiple sources</li>
+                    <li><strong>Decision Support</strong>: Need for quick access to critical information for decision-making</li>
+                </ul>
+
+                <h3>Types of Summarization</h3>
+
+                <p>AI-powered summarization generally falls into two main categories:</p>
+
+                <h4>Extractive Summarization</h4>
+                <ul>
+                    <li>Identifies and extracts the most important sentences or passages from the original document</li>
+                    <li>Preserves original wording and context</li>
+                    <li>Advantages: Maintains factual accuracy, simpler to implement, preserves original voice</li>
+                    <li>Limitations: May lack coherence between extracted segments, can miss implicit information</li>
+                    <li>Best for: Legal documents, scientific papers, factual reports where original wording is important</li>
+                </ul>
+
+                <h4>Abstractive Summarization</h4>
+                <ul>
+                    <li>Generates new text that captures the essence of the original document</li>
+                    <li>Creates human-like summaries with novel phrasing</li>
+                    <li>Advantages: More coherent and readable, can incorporate implicit information, adjustable length</li>
+                    <li>Limitations: Risk of factual errors or hallucinations, more complex to implement</li>
+                    <li>Best for: News articles, meeting notes, correspondence where readability is prioritized</li>
+                </ul>
+
+                <h3>Summarization Approaches</h3>
+
+                <p>Modern AI systems employ several techniques for document summarization:</p>
+
+                <h4>Statistical Methods</h4>
+                <ul>
+                    <li>TF-IDF (Term Frequency-Inverse Document Frequency): Identifies important terms and sentences</li>
+                    <li>TextRank/LexRank: Graph-based algorithms that rank sentences by importance</li>
+                    <li>Latent Semantic Analysis: Identifies key concepts and relationships</li>
+                </ul>
+
+                <h4>Machine Learning Approaches</h4>
+                <ul>
+                    <li>Supervised Learning: Trained on document-summary pairs to learn extraction patterns</li>
+                    <li>Reinforcement Learning: Optimizes summaries based on reward signals like readability and coverage</li>
+                    <li>Clustering: Groups similar content to identify representative segments</li>
+                </ul>
+
+                <h4>Deep Learning Models</h4>
+                <ul>
+                    <li>Sequence-to-Sequence Models: Encode documents and decode summaries</li>
+                    <li>Transformer-Based Models: Leverage attention mechanisms to capture document context</li>
+                    <li>Pre-trained Language Models: Fine-tuned models like BART, T5, or GPT variants</li>
+                </ul>
+
+                <h3>Evaluation Metrics</h3>
+
+                <p>Assessing summarization quality involves several metrics:</p>
+
+                <ul>
+                    <li><strong>ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</strong>: Measures overlap between generated summaries and reference summaries</li>
+                    <li><strong>BLEU (Bilingual Evaluation Understudy)</strong>: Evaluates precision of generated summaries</li>
+                    <li><strong>BERTScore</strong>: Uses contextual embeddings to measure semantic similarity</li>
+                    <li><strong>Human Evaluation</strong>: Subjective assessment of readability, coherence, and information retention</li>
+                    <li><strong>Task-Based Evaluation</strong>: Measuring performance on downstream tasks using the summaries</li>
+                </ul>
+
+                <h2 id="section-2">Extractive vs. Abstractive Approaches</h2>
+
+                <h3>Extractive Summarization in Detail</h3>
+
+                <p>Extractive methods select and arrange existing content from the source document:</p>
+
+                <ol>
+                    <li><strong>Content Analysis</strong>: Breaking the document into sentences or paragraphs</li>
+                    <li><strong>Feature Extraction</strong>: Identifying characteristics like sentence position, keyword presence, named entities</li>
+                    <li><strong>Importance Scoring</strong>: Ranking segments based on extracted features</li>
+                    <li><strong>Selection</strong>: Choosing top-ranked segments up to desired summary length</li>
+                    <li><strong>Assembly</strong>: Arranging selected segments in a coherent order</li>
+                </ol>
+
+                <p><strong>Implementation Example</strong>:</p>
+                <pre><code># Simplified extractive summarization with TextRank
+from nltk.tokenize import sent_tokenize
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+
+def extractive_summarize(text, num_sentences=3):
+    # Tokenize into sentences
+    sentences = sent_tokenize(text)
+    
+    # Create sentence vectors using TF-IDF
+    vectorizer = TfidfVectorizer(stop_words=stopwords.words('english'))
+    sentence_vectors = vectorizer.fit_transform(sentences)
+    
+    # Calculate similarity matrix
+    similarity_matrix = cosine_similarity(sentence_vectors)
+    
+    # Apply TextRank algorithm
+    scores = np.sum(similarity_matrix, axis=1)
+    ranked_sentences = [(scores[i], sentences[i], i) for i in range(len(sentences))]
+    ranked_sentences.sort(reverse=True)
+    
+    # Select top sentences and arrange in original order
+    top_sentences = sorted(ranked_sentences[:num_sentences], key=lambda x: x[2])
+    summary = ' '.join([sentence for _, sentence, _ in top_sentences])
+    
+    return summary</code></pre>
+
+                <h3>Abstractive Summarization in Detail</h3>
+
+                <p>Abstractive methods generate new content that captures the essence of the source:</p>
+
+                <ol>
+                    <li><strong>Document Understanding</strong>: Comprehending the full context and meaning</li>
+                    <li><strong>Content Planning</strong>: Determining key points to include</li>
+                    <li><strong>Text Generation</strong>: Creating new sentences that convey essential information</li>
+                    <li><strong>Refinement</strong>: Ensuring coherence, factual accuracy, and readability</li>
+                </ol>
+
+                <p><strong>Implementation Example</strong>:</p>
+                <pre><code># Abstractive summarization using a pre-trained model
+from transformers import pipeline
+
+def abstractive_summarize(text, max_length=150, min_length=50):
+    # Initialize summarization pipeline with pre-trained model
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    
+    # Generate summary
+    summary = summarizer(text, max_length=max_length, min_length=min_length, 
+                         do_sample=False)[0]['summary_text']
+    
+    return summary</code></pre>
+
+                <h3>Choosing the Right Approach</h3>
+
+                <p>The optimal summarization approach depends on several factors:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Extractive Preferred</th>
+                            <th>Abstractive Preferred</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Document Type</td>
+                            <td>Legal, scientific, technical</td>
+                            <td>News, narratives, correspondence</td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy Requirements</td>
+                            <td>High factual precision needed</td>
+                            <td>General gist is sufficient</td>
+                        </tr>
+                        <tr>
+                            <td>Length Reduction</td>
+                            <td>Moderate reduction (30-50%)</td>
+                            <td>Significant reduction (70-90%)</td>
+                        </tr>
+                        <tr>
+                            <td>Implementation Complexity</td>
+                            <td>Simpler, fewer resources</td>
+                            <td>More complex, resource-intensive</td>
+                        </tr>
+                        <tr>
+                            <td>Customization</td>
+                            <td>Domain-specific keywords</td>
+                            <td>Tone and style adaptation</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>Many production systems combine both approaches, using extractive methods to identify key content and abstractive techniques to refine and connect the information.</p>
+
+                <h2 id="section-3">Task Identification and Automation</h2>
+
+                <p>Beyond summarization, AI can identify actionable items in documents and automate related tasks.</p>
+
+                <h3>Task Identification</h3>
+
+                <p>AI systems can recognize various types of tasks embedded in documents:</p>
+
+                <h4>Explicit Tasks</h4>
+                <ul>
+                    <li>Direct assignments or requests</li>
+                    <li>Deadlines and due dates</li>
+                    <li>Action items from meetings</li>
+                    <li>Formal approvals or sign-offs required</li>
+                </ul>
+
+                <h4>Implicit Tasks</h4>
+                <ul>
+                    <li>Policy compliance requirements</li>
+                    <li>Potential risks requiring mitigation</li>
+                    <li>Opportunities for follow-up</li>
+                    <li>Information gaps needing resolution</li>
+                </ul>
+
+                <h3>Task Extraction Techniques</h3>
+
+                <p>Several methods enable effective task identification:</p>
+
+                <ol>
+                    <li><strong>Intent Recognition</strong>: Identifying language patterns that signal requests or requirements</li>
+                    <li><strong>Named Entity Recognition</strong>: Extracting people, dates, and resources involved in tasks</li>
+                    <li><strong>Dependency Parsing</strong>: Understanding relationships between actions and responsible parties</li>
+                    <li><strong>Temporal Analysis</strong>: Identifying timeframes and deadlines</li>
+                    <li><strong>Priority Detection</strong>: Assessing urgency and importance signals</li>
+                </ol>
+
+                <h3>From Identification to Automation</h3>
+
+                <p>Once tasks are identified, several automation pathways are possible:</p>
+
+                <ol>
+                    <li><strong>Task Assignment</strong>: Routing tasks to appropriate individuals or teams</li>
+                    <li><strong>Calendar Integration</strong>: Creating calendar events for deadlines</li>
+                    <li><strong>Workflow Initiation</strong>: Triggering business processes based on document content</li>
+                    <li><strong>Notification Systems</strong>: Alerting stakeholders about required actions</li>
+                    <li><strong>Progress Tracking</strong>: Monitoring task status through completion</li>
+                </ol>
+
+                <h2 id="section-4">Building Automated Workflows</h2>
+
+                <p>Effective document-centric automation requires thoughtful workflow design.</p>
+
+                <h3>Workflow Components</h3>
+
+                <p>Complete document automation workflows typically include:</p>
+
+                <ol>
+                    <li><strong>Document Ingestion</strong>: Capturing documents from various sources (email, scanners, uploads)</li>
+                    <li><strong>Pre-processing</strong>: Preparing documents for analysis (OCR, format conversion)</li>
+                    <li><strong>Classification</strong>: Determining document type and routing path</li>
+                    <li><strong>Information Extraction</strong>: Pulling relevant data from the document</li>
+                    <li><strong>Summarization</strong>: Creating concise versions for quick review</li>
+                    <li><strong>Task Identification</strong>: Recognizing required actions</li>
+                    <li><strong>Business Logic Application</strong>: Applying rules and decision criteria</li>
+                    <li><strong>Task Execution</strong>: Performing automated actions or routing to humans</li>
+                    <li><strong>Notification</strong>: Alerting stakeholders of outcomes or required inputs</li>
+                    <li><strong>Archiving</strong>: Storing documents and processing records</li>
+                </ol>
+
+                <h3>Integration Approaches</h3>
+
+                <p>Document automation workflows can integrate with existing systems through:</p>
+
+                <ul>
+                    <li><strong>API Connections</strong>: Direct integration with business applications</li>
+                    <li><strong>Robotic Process Automation (RPA)</strong>: Interface-level integration with legacy systems</li>
+                    <li><strong>Webhook Triggers</strong>: Event-based connections to workflow systems</li>
+                    <li><strong>Message Queues</strong>: Asynchronous communication between components</li>
+                    <li><strong>Custom Connectors</strong>: Purpose-built integrations for specific applications</li>
+                </ul>
+
+                <h3>Implementation Best Practices</h3>
+
+                <p>Successful document automation implementations follow these principles:</p>
+
+                <ol>
+                    <li><strong>Start Small</strong>: Begin with well-defined, high-value processes</li>
+                    <li><strong>Measure Baselines</strong>: Document current performance metrics before automation</li>
+                    <li><strong>Design for Exceptions</strong>: Create clear paths for handling unusual cases</li>
+                    <li><strong>Include Human Oversight</strong>: Maintain appropriate review and approval steps</li>
+                    <li><strong>Continuous Improvement</strong>: Monitor performance and refine based on outcomes</li>
+                    <li><strong>Knowledge Capture</strong>: Document decisions and rationale for future reference</li>
+                </ol>
+            </article>
+        </div>
+
+        <div class="module-navigation">
+            <a href="module2.html" class="btn prev">Previous Module</a>
+            <a href="module4.html" class="btn next">Next Module</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

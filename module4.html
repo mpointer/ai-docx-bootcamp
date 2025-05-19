@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Security, Compliance, and Governance in AI Workflows</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --background-color: #f9fafb;
+            --card-color: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Module Content */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: var(--light-text);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-icon {
+            font-size: 3.5rem;
+            margin-right: 2rem;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-description {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .module-meta span {
+            display: inline-flex;
+            align-items: center;
+            color: var(--light-text);
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-sidebar {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            align-self: start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-nav {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .section-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-box {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .resources-box ul {
+            list-style: none;
+        }
+
+        .resources-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .module-body {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .btn.prev {
+            background-color: var(--light-text);
+        }
+
+        .btn.next {
+            background-color: var(--success-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .module-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .module-meta {
+                justify-content: center;
+            }
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--background-color);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Docx Builder Bootcamp</h1>
+            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+        </div>
+    </header>
+
+    <main class="container module-content">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> &gt; <span>Security, Compliance, and Governance in AI Workflows</span>
+        </nav>
+
+        <div class="module-header">
+            <div class="module-icon">🔒</div>
+            <div class="module-info">
+                <h2>Security, Compliance, and Governance in AI Workflows</h2>
+                <p class="module-description">Understand the critical security and compliance considerations when implementing AI document solutions.</p>
+                <div class="module-meta">
+                    <span class="duration">Duration: 35 minutes</span>
+                    <span class="level">Level: Advanced</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <aside class="module-sidebar">
+                <h3>Module Sections</h3>
+                <ul class="section-nav">
+                    <li><a href="#section-1">Security Fundamentals for AI Document Systems</a></li>
+                    <li><a href="#section-2">Regulatory Compliance Frameworks</a></li>
+                    <li><a href="#section-3">Data Privacy and Protection</a></li>
+                    <li><a href="#section-4">Governance Best Practices</a></li>
+                </ul>
+                
+                <div class="resources-box">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">AI Security Checklist</a></li>
+                        <li><a href="#">Compliance Guide</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <article class="module-body">
+                <h2 id="section-1">Security Fundamentals for AI Document Systems</h2>
+
+                <p>Security is paramount when implementing AI document processing systems, as these solutions often handle sensitive information across various stages of the document lifecycle. A comprehensive security approach addresses multiple layers of protection.</p>
+
+                <h3>Document Security Layers</h3>
+
+                <p>Effective security for AI document systems encompasses several critical layers:</p>
+
+                <h4>Data-in-Transit Security</h4>
+                <ul>
+                    <li><strong>Encryption</strong>: TLS/SSL protocols for all network communications</li>
+                    <li><strong>Secure APIs</strong>: Authentication and authorization for all API endpoints</li>
+                    <li><strong>Network Controls</strong>: Firewalls, VPNs, and network segmentation</li>
+                    <li><strong>Monitoring</strong>: Traffic analysis and intrusion detection</li>
+                </ul>
+
+                <h4>Data-at-Rest Security</h4>
+                <ul>
+                    <li><strong>Storage Encryption</strong>: Encrypting document repositories and databases</li>
+                    <li><strong>Access Controls</strong>: Principle of least privilege for storage systems</li>
+                    <li><strong>Key Management</strong>: Secure handling of encryption keys</li>
+                    <li><strong>Data Lifecycle</strong>: Secure deletion and media sanitization</li>
+                </ul>
+
+                <h4>Processing Security</h4>
+                <ul>
+                    <li><strong>Secure Compute Environments</strong>: Isolated processing of sensitive documents</li>
+                    <li><strong>Memory Protection</strong>: Preventing data leakage during processing</li>
+                    <li><strong>Secure ML Pipelines</strong>: Protected model training and inference</li>
+                    <li><strong>Vulnerability Management</strong>: Regular security testing and patching</li>
+                </ul>
+
+                <h4>Application Security</h4>
+                <ul>
+                    <li><strong>Authentication</strong>: Multi-factor authentication for system access</li>
+                    <li><strong>Authorization</strong>: Role-based access controls for document operations</li>
+                    <li><strong>Session Management</strong>: Secure handling of user sessions</li>
+                    <li><strong>Input Validation</strong>: Preventing injection attacks and malicious uploads</li>
+                </ul>
+
+                <h3>AI-Specific Security Considerations</h3>
+
+                <p>AI document systems introduce unique security challenges:</p>
+
+                <h4>Model Security</h4>
+                <ul>
+                    <li><strong>Model Poisoning Protection</strong>: Preventing manipulation of training data</li>
+                    <li><strong>Adversarial Attack Mitigation</strong>: Defending against inputs designed to trick AI models</li>
+                    <li><strong>Model Theft Prevention</strong>: Protecting intellectual property in AI models</li>
+                    <li><strong>Inference Protection</strong>: Preventing extraction of training data through model outputs</li>
+                </ul>
+
+                <h4>Training Data Security</h4>
+                <ul>
+                    <li><strong>Data Provenance</strong>: Tracking the origin and chain of custody for training data</li>
+                    <li><strong>Data Anonymization</strong>: Removing sensitive information from training datasets</li>
+                    <li><strong>Synthetic Data</strong>: Using artificially generated data to reduce exposure of real documents</li>
+                    <li><strong>Access Logging</strong>: Comprehensive auditing of training data access</li>
+                </ul>
+
+                <h3>Security Architecture Best Practices</h3>
+
+                <p>Implementing a secure AI document system requires a thoughtful architecture:</p>
+
+                <ol>
+                    <li><strong>Defense in Depth</strong>: Multiple security controls at different layers</li>
+                    <li><strong>Zero Trust Model</strong>: Verifying every access request regardless of source</li>
+                    <li><strong>Secure DevOps</strong>: Integrating security throughout the development lifecycle</li>
+                    <li><strong>Continuous Monitoring</strong>: Real-time visibility into system security status</li>
+                    <li><strong>Incident Response</strong>: Prepared procedures for security breaches</li>
+                    <li><strong>Regular Assessment</strong>: Penetration testing and security audits</li>
+                </ol>
+
+                <h2 id="section-2">Regulatory Compliance Frameworks</h2>
+
+                <p>AI document systems must adhere to various regulatory frameworks depending on industry, geography, and data types.</p>
+
+                <h3>Key Compliance Regimes</h3>
+
+                <p>Several major regulatory frameworks impact AI document processing:</p>
+
+                <h4>General Data Protection Regulation (GDPR)</h4>
+                <ul>
+                    <li><strong>Territorial Scope</strong>: Applies to EU data subjects regardless of company location</li>
+                    <li><strong>Key Requirements</strong>: 
+                        <ul>
+                            <li>Lawful basis for processing</li>
+                            <li>Data minimization</li>
+                            <li>Purpose limitation</li>
+                            <li>Storage limitation</li>
+                            <li>Rights of data subjects (access, rectification, erasure)</li>
+                        </ul>
+                    </li>
+                    <li><strong>AI Impact</strong>: Restrictions on automated decision-making and profiling</li>
+                    <li><strong>Penalties</strong>: Up to 4% of global annual revenue or €20 million</li>
+                </ul>
+
+                <h4>California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA)</h4>
+                <ul>
+                    <li><strong>Territorial Scope</strong>: Businesses serving California residents meeting certain thresholds</li>
+                    <li><strong>Key Requirements</strong>:
+                        <ul>
+                            <li>Right to know what personal information is collected</li>
+                            <li>Right to delete personal information</li>
+                            <li>Right to opt-out of sale of personal information</li>
+                            <li>Right to non-discrimination for exercising rights</li>
+                        </ul>
+                    </li>
+                    <li><strong>AI Impact</strong>: Disclosure requirements for automated decision-making</li>
+                    <li><strong>Penalties</strong>: $2,500 per violation, $7,500 per intentional violation</li>
+                </ul>
+
+                <h4>Health Insurance Portability and Accountability Act (HIPAA)</h4>
+                <ul>
+                    <li><strong>Territorial Scope</strong>: US healthcare providers, insurers, and their business associates</li>
+                    <li><strong>Key Requirements</strong>:
+                        <ul>
+                            <li>Privacy Rule: Protections for personal health information</li>
+                            <li>Security Rule: Administrative, physical, and technical safeguards</li>
+                            <li>Breach Notification Rule: Reporting requirements for data breaches</li>
+                        </ul>
+                    </li>
+                    <li><strong>AI Impact</strong>: Special considerations for processing protected health information</li>
+                    <li><strong>Penalties</strong>: Tiered civil penalties up to $1.5 million per violation category per year</li>
+                </ul>
+
+                <h4>Industry-Specific Regulations</h4>
+                <ul>
+                    <li><strong>Financial Services</strong>: 
+                        <ul>
+                            <li>Gramm-Leach-Bliley Act (GLBA)</li>
+                            <li>Payment Card Industry Data Security Standard (PCI DSS)</li>
+                            <li>Bank Secrecy Act (BSA)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Government</strong>: 
+                        <ul>
+                            <li>Federal Risk and Authorization Management Program (FedRAMP)</li>
+                            <li>Federal Information Security Management Act (FISMA)</li>
+                        </ul>
+                    </li>
+                    <li><strong>International</strong>: 
+                        <ul>
+                            <li>Personal Information Protection and Electronic Documents Act (PIPEDA) - Canada</li>
+                            <li>Personal Data Protection Act (PDPA) - Singapore</li>
+                            <li>General Data Protection Law (LGPD) - Brazil</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Compliance by Design</h3>
+
+                <p>Embedding compliance into AI document systems requires a structured approach:</p>
+
+                <ol>
+                    <li><strong>Compliance Mapping</strong>: Identifying applicable regulations and specific requirements</li>
+                    <li><strong>Risk Assessment</strong>: Evaluating compliance risks in the document workflow</li>
+                    <li><strong>Control Implementation</strong>: Building technical and procedural safeguards</li>
+                    <li><strong>Documentation</strong>: Maintaining evidence of compliance measures</li>
+                    <li><strong>Testing</strong>: Regular validation of compliance controls</li>
+                    <li><strong>Monitoring</strong>: Ongoing oversight of compliance status</li>
+                    <li><strong>Adaptation</strong>: Updating systems as regulatory requirements evolve</li>
+                </ol>
+
+                <h2 id="section-3">Data Privacy and Protection</h2>
+
+                <p>Beyond regulatory compliance, ethical data handling is essential for AI document systems.</p>
+
+                <h3>Privacy Principles</h3>
+
+                <p>Core privacy principles for AI document processing include:</p>
+
+                <h4>Transparency</h4>
+                <ul>
+                    <li>Clear disclosure of data collection and processing activities</li>
+                    <li>Explanation of AI decision-making processes</li>
+                    <li>Notification of automated processing</li>
+                </ul>
+
+                <h4>Purpose Limitation</h4>
+                <ul>
+                    <li>Collecting and processing data only for specified purposes</li>
+                    <li>Avoiding function creep and secondary uses</li>
+                    <li>Implementing technical controls to enforce limitations</li>
+                </ul>
+
+                <h4>Data Minimization</h4>
+                <ul>
+                    <li>Collecting only necessary data elements</li>
+                    <li>Applying redaction and anonymization techniques</li>
+                    <li>Implementing retention limits and deletion procedures</li>
+                </ul>
+
+                <h4>Individual Control</h4>
+                <ul>
+                    <li>Providing mechanisms for consent management</li>
+                    <li>Enabling access to personal data</li>
+                    <li>Supporting correction and deletion requests</li>
+                </ul>
+
+                <h3>Privacy-Enhancing Technologies</h3>
+
+                <p>Several technologies can strengthen privacy in AI document systems:</p>
+
+                <h4>Differential Privacy</h4>
+                <ul>
+                    <li>Adding calibrated noise to protect individual data points</li>
+                    <li>Enabling aggregate analysis while protecting individual privacy</li>
+                    <li>Providing mathematical privacy guarantees</li>
+                </ul>
+
+                <h4>Federated Learning</h4>
+                <ul>
+                    <li>Training AI models across decentralized devices</li>
+                    <li>Keeping document data local while sharing model updates</li>
+                    <li>Reducing centralized data exposure</li>
+                </ul>
+
+                <h4>Homomorphic Encryption</h4>
+                <ul>
+                    <li>Performing computations on encrypted data</li>
+                    <li>Processing documents without exposing content</li>
+                    <li>Maintaining confidentiality throughout the processing pipeline</li>
+                </ul>
+
+                <h4>Secure Multi-Party Computation</h4>
+                <ul>
+                    <li>Distributing computation across multiple parties</li>
+                    <li>Enabling collaborative analysis without sharing raw documents</li>
+                    <li>Protecting sensitive information from any single participant</li>
+                </ul>
+
+                <h3>Privacy Impact Assessment</h3>
+
+                <p>Before implementing AI document systems, organizations should conduct a thorough privacy impact assessment:</p>
+
+                <ol>
+                    <li><strong>System Mapping</strong>: Documenting data flows and processing activities</li>
+                    <li><strong>Risk Identification</strong>: Identifying potential privacy risks and impacts</li>
+                    <li><strong>Control Evaluation</strong>: Assessing existing privacy safeguards</li>
+                    <li><strong>Gap Analysis</strong>: Determining additional controls needed</li>
+                    <li><strong>Remediation Planning</strong>: Developing a roadmap for addressing privacy gaps</li>
+                    <li><strong>Documentation</strong>: Recording findings and decisions</li>
+                    <li><strong>Stakeholder Review</strong>: Obtaining input from privacy experts and data subjects</li>
+                </ol>
+
+                <h2 id="section-4">Governance Best Practices</h2>
+
+                <p>Effective governance ensures AI document systems operate responsibly, ethically, and in alignment with organizational objectives.</p>
+
+                <h3>Governance Framework Components</h3>
+
+                <p>A comprehensive governance framework includes:</p>
+
+                <h4>Policies and Standards</h4>
+                <ul>
+                    <li><strong>AI Ethics Policy</strong>: Principles for responsible AI use</li>
+                    <li><strong>Document Handling Standards</strong>: Requirements for document processing</li>
+                    <li><strong>Data Governance Policy</strong>: Rules for data management</li>
+                    <li><strong>Security Standards</strong>: Controls for protecting document systems</li>
+                </ul>
+
+                <h4>Roles and Responsibilities</h4>
+                <ul>
+                    <li><strong>Executive Sponsor</strong>: Senior leadership accountability</li>
+                    <li><strong>AI Ethics Committee</strong>: Cross-functional oversight group</li>
+                    <li><strong>Data Stewards</strong>: Responsible for data quality and appropriate use</li>
+                    <li><strong>System Owners</strong>: Accountable for specific AI document applications</li>
+                </ul>
+
+                <h4>Processes and Procedures</h4>
+                <ul>
+                    <li><strong>Model Development Lifecycle</strong>: Structured approach to AI creation</li>
+                    <li><strong>Change Management</strong>: Controlled system modifications</li>
+                    <li><strong>Risk Assessment</strong>: Regular evaluation of system risks</li>
+                    <li><strong>Incident Response</strong>: Procedures for handling issues</li>
+                    <li><strong>Audit and Compliance</strong>: Verification of control effectiveness</li>
+                </ul>
+
+                <h3>Model Governance</h3>
+
+                <p>AI models require specific governance considerations:</p>
+
+                <h4>Model Inventory</h4>
+                <ul>
+                    <li>Comprehensive registry of all AI models</li>
+                    <li>Documentation of model purpose and limitations</li>
+                    <li>Tracking of model versions and changes</li>
+                </ul>
+
+                <h4>Model Risk Management</h4>
+                <ul>
+                    <li>Tiered risk classification based on impact</li>
+                    <li>Validation requirements proportional to risk</li>
+                    <li>Regular reassessment as models evolve</li>
+                </ul>
+
+                <h4>Model Documentation</h4>
+                <ul>
+                    <li>Training data sources and preparation methods</li>
+                    <li>Model architecture and hyperparameters</li>
+                    <li>Performance metrics and evaluation results</li>
+                    <li>Known limitations and edge cases</li>
+                </ul>
+
+                <h4>Model Monitoring</h4>
+                <ul>
+                    <li>Ongoing performance tracking</li>
+                    <li>Drift detection and alerting</li>
+                    <li>Retraining triggers and procedures</li>
+                </ul>
+
+                <h3>Explainability and Transparency</h3>
+
+                <p>Ensuring AI document systems remain understandable and accountable:</p>
+
+                <h4>Explainable AI Approaches</h4>
+                <ul>
+                    <li>Using interpretable models where possible</li>
+                    <li>Implementing post-hoc explanation techniques</li>
+                    <li>Providing confidence scores with predictions</li>
+                </ul>
+
+                <h4>Transparency Mechanisms</h4>
+                <ul>
+                    <li>Documenting decision criteria</li>
+                    <li>Maintaining processing logs</li>
+                    <li>Enabling human review of automated decisions</li>
+                </ul>
+
+                <h4>Bias Detection and Mitigation</h4>
+                <ul>
+                    <li>Proactive testing for algorithmic bias</li>
+                    <li>Diverse and representative training data</li>
+                    <li>Regular fairness assessments</li>
+                    <li>Remediation procedures for identified bias</li>
+                </ul>
+
+                <h3>Continuous Improvement</h3>
+
+                <p>Governance is not static but evolves with the system:</p>
+
+                <ol>
+                    <li><strong>Metrics and Measurement</strong>: Defining success criteria</li>
+                    <li><strong>Regular Reviews</strong>: Scheduled governance assessments</li>
+                    <li><strong>Feedback Loops</strong>: Incorporating user and stakeholder input</li>
+                    <li><strong>Knowledge Management</strong>: Capturing lessons learned</li>
+                    <li><strong>Adaptation</strong>: Evolving governance as technology and requirements change</li>
+                </ol>
+            </article>
+        </div>
+
+        <div class="module-navigation">
+            <a href="module3.html" class="btn prev">Previous Module</a>
+            <a href="module5.html" class="btn next">Next Module</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

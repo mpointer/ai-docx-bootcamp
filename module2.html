@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Document Classification & Data Extraction with AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --background-color: #f9fafb;
+            --card-color: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Module Content */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: var(--light-text);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-icon {
+            font-size: 3.5rem;
+            margin-right: 2rem;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-description {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .module-meta span {
+            display: inline-flex;
+            align-items: center;
+            color: var(--light-text);
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-sidebar {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            align-self: start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-nav {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .section-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-box {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .resources-box ul {
+            list-style: none;
+        }
+
+        .resources-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .module-body {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .btn.prev {
+            background-color: var(--light-text);
+        }
+
+        .btn.next {
+            background-color: var(--success-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .module-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .module-meta {
+                justify-content: center;
+            }
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--background-color);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Docx Builder Bootcamp</h1>
+            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+        </div>
+    </header>
+
+    <main class="container module-content">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> &gt; <span>Document Classification & Data Extraction with AI</span>
+        </nav>
+
+        <div class="module-header">
+            <div class="module-icon">📄</div>
+            <div class="module-info">
+                <h2>Document Classification & Data Extraction with AI</h2>
+                <p class="module-description">Explore how AI can automatically classify documents and extract valuable data from various formats.</p>
+                <div class="module-meta">
+                    <span class="duration">Duration: 45 minutes</span>
+                    <span class="level">Level: Intermediate</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <aside class="module-sidebar">
+                <h3>Module Sections</h3>
+                <ul class="section-nav">
+                    <li><a href="#section-1">Document Classification Fundamentals</a></li>
+                    <li><a href="#section-2">Extraction Techniques for Structured Documents</a></li>
+                    <li><a href="#section-3">Working with Semi-Structured Content</a></li>
+                    <li><a href="#section-4">Validation and Quality Control</a></li>
+                </ul>
+                
+                <div class="resources-box">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Classification Model Guide</a></li>
+                        <li><a href="#">Extraction Techniques</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <article class="module-body">
+                <h2 id="section-1">Document Classification Fundamentals</h2>
+
+                <p>Document classification is the process of automatically categorizing documents into predefined classes or types based on their content, structure, and metadata. This foundational capability enables organizations to streamline document routing, apply appropriate processing rules, and organize information at scale.</p>
+
+                <h3>Classification Approaches</h3>
+
+                <p>Modern document classification systems typically employ one or more of these approaches:</p>
+
+                <h4>Rule-Based Classification</h4>
+                <ul>
+                    <li>Uses predefined rules and keywords to categorize documents</li>
+                    <li><strong>Advantages</strong>: Simple to implement, explainable decisions, works well for standardized documents</li>
+                    <li><strong>Limitations</strong>: Struggles with variations, requires manual rule creation, limited scalability</li>
+                    <li><strong>Example</strong>: Classifying documents containing specific tax form numbers or legal clause identifiers</li>
+                </ul>
+
+                <h4>Machine Learning Classification</h4>
+                <ul>
+                    <li>Learns patterns from labeled examples to predict document categories</li>
+                    <li><strong>Advantages</strong>: Handles variations well, improves with more data, adapts to new patterns</li>
+                    <li><strong>Limitations</strong>: Requires training data, may be less explainable, needs periodic retraining</li>
+                    <li><strong>Example</strong>: Distinguishing between invoices, contracts, and correspondence based on learned patterns</li>
+                </ul>
+
+                <h4>Hybrid Approaches</h4>
+                <ul>
+                    <li>Combines rules and machine learning for optimal results</li>
+                    <li><strong>Advantages</strong>: Leverages strengths of both approaches, provides fallback mechanisms</li>
+                    <li><strong>Limitations</strong>: More complex to implement and maintain</li>
+                    <li><strong>Example</strong>: Using rules for well-defined document types and ML for edge cases</li>
+                </ul>
+
+                <h3>Classification Features</h3>
+
+                <p>Effective classification systems analyze multiple document characteristics:</p>
+
+                <ul>
+                    <li><strong>Text content</strong>: The words, phrases, and linguistic patterns in the document</li>
+                    <li><strong>Layout information</strong>: The spatial arrangement of text and visual elements</li>
+                    <li><strong>Metadata</strong>: File properties, creation dates, author information</li>
+                    <li><strong>Image characteristics</strong>: Visual elements, logos, and graphical components</li>
+                    <li><strong>Contextual information</strong>: Related documents, business process context</li>
+                </ul>
+
+                <h3>Classification Metrics</h3>
+
+                <p>When evaluating classification systems, several key metrics are important:</p>
+
+                <ul>
+                    <li><strong>Accuracy</strong>: Overall percentage of correctly classified documents</li>
+                    <li><strong>Precision</strong>: Proportion of positive identifications that were actually correct</li>
+                    <li><strong>Recall</strong>: Proportion of actual positives that were correctly identified</li>
+                    <li><strong>F1 Score</strong>: Harmonic mean of precision and recall</li>
+                    <li><strong>Confusion Matrix</strong>: Table showing correct and incorrect classifications by category</li>
+                </ul>
+
+                <p>For most business applications, a balanced approach optimizing for both precision and recall is ideal, though some use cases may prioritize one over the other.</p>
+
+                <h2 id="section-2">Extraction Techniques for Structured Documents</h2>
+
+                <p>Structured documents follow consistent, predictable formats with clearly defined fields and sections. Examples include standardized forms, applications, and templated reports.</p>
+
+                <h3>Template-Based Extraction</h3>
+
+                <p>For highly structured documents with fixed layouts:</p>
+
+                <ol>
+                    <li><strong>Template Definition</strong>: Creating a map of field locations and expected data types</li>
+                    <li><strong>Registration</strong>: Aligning the incoming document with the template</li>
+                    <li><strong>Field Extraction</strong>: Pulling data from predefined zones</li>
+                    <li><strong>Validation</strong>: Verifying extracted data against expected formats and rules</li>
+                </ol>
+
+                <p>This approach works well for standardized forms like tax documents, loan applications, and government forms.</p>
+
+                <h3>OCR + Field Detection</h3>
+
+                <p>For structured documents with some variation:</p>
+
+                <ol>
+                    <li><strong>Optical Character Recognition (OCR)</strong>: Converting document images to machine-readable text</li>
+                    <li><strong>Field Identification</strong>: Locating fields based on labels, positions, or contextual clues</li>
+                    <li><strong>Data Extraction</strong>: Capturing the values associated with identified fields</li>
+                    <li><strong>Post-Processing</strong>: Normalizing and validating extracted information</li>
+                </ol>
+
+                <p>This method accommodates minor variations in layout while maintaining high accuracy.</p>
+
+                <h3>Form Recognition AI</h3>
+
+                <p>Modern AI-powered form processors combine multiple techniques:</p>
+
+                <ol>
+                    <li><strong>Form Analysis</strong>: Understanding the overall structure and type of form</li>
+                    <li><strong>Key-Value Pair Detection</strong>: Identifying field labels and their associated values</li>
+                    <li><strong>Table Recognition</strong>: Extracting structured data from tabular sections</li>
+                    <li><strong>Contextual Understanding</strong>: Using surrounding information to improve extraction accuracy</li>
+                </ol>
+
+                <p>These systems can handle a wider range of structured documents with less configuration.</p>
+
+                <h2 id="section-3">Working with Semi-Structured Content</h2>
+
+                <p>Semi-structured documents follow general patterns but lack rigid standardization. Examples include invoices, receipts, financial statements, and many business documents.</p>
+
+                <h3>Challenges of Semi-Structured Documents</h3>
+
+                <p>These documents present unique extraction challenges:</p>
+
+                <ul>
+                    <li>Variable layouts across different sources</li>
+                    <li>Inconsistent field labeling and terminology</li>
+                    <li>Mixed content types (text, tables, graphics)</li>
+                    <li>Varying levels of information completeness</li>
+                </ul>
+
+                <h3>Advanced Extraction Techniques</h3>
+
+                <p>Modern AI systems address these challenges through:</p>
+
+                <h4>Named Entity Recognition (NER)</h4>
+                <ul>
+                    <li>Identifies specific types of information (dates, amounts, organizations)</li>
+                    <li>Works across varying document formats</li>
+                    <li>Example: Finding all monetary amounts regardless of position</li>
+                </ul>
+
+                <h4>Relationship Extraction</h4>
+                <ul>
+                    <li>Determines connections between extracted entities</li>
+                    <li>Understands contextual associations</li>
+                    <li>Example: Linking line items to their quantities and prices</li>
+                </ul>
+
+                <h4>Layout Analysis</h4>
+                <ul>
+                    <li>Interprets the visual structure of documents</li>
+                    <li>Identifies sections, tables, and hierarchical relationships</li>
+                    <li>Example: Distinguishing header information from line items on an invoice</li>
+                </ul>
+
+                <h4>Semantic Understanding</h4>
+                <ul>
+                    <li>Comprehends the meaning and purpose of extracted information</li>
+                    <li>Applies business context to ambiguous data</li>
+                    <li>Example: Differentiating between order date, shipping date, and payment date</li>
+                </ul>
+
+                <h3>Training Approaches for Semi-Structured Extraction</h3>
+
+                <p>Several methods can improve extraction from semi-structured documents:</p>
+
+                <ol>
+                    <li><strong>Few-Shot Learning</strong>: Training systems with a small number of examples</li>
+                    <li><strong>Transfer Learning</strong>: Applying knowledge from one document type to another</li>
+                    <li><strong>Active Learning</strong>: Prioritizing human review of uncertain extractions to improve the model</li>
+                    <li><strong>Continuous Learning</strong>: Incorporating corrections to improve future extractions</li>
+                </ol>
+
+                <h2 id="section-4">Validation and Quality Control</h2>
+
+                <p>Extraction systems require robust validation to ensure business-ready data quality.</p>
+
+                <h3>Validation Strategies</h3>
+
+                <p>Multiple layers of validation improve overall accuracy:</p>
+
+                <h4>Format Validation</h4>
+                <ul>
+                    <li>Ensures extracted data matches expected patterns</li>
+                    <li>Examples: Date formats, phone numbers, email addresses, currency amounts</li>
+                </ul>
+
+                <h4>Business Rule Validation</h4>
+                <ul>
+                    <li>Applies domain-specific logic to verify reasonableness</li>
+                    <li>Examples: Price × Quantity = Total, Start Date < End Date</li>
+                </ul>
+
+                <h4>Cross-Field Validation</h4>
+                <ul>
+                    <li>Checks consistency across related fields</li>
+                    <li>Examples: Shipping address matches billing country, totals match line items</li>
+                </ul>
+
+                <h4>External Validation</h4>
+                <ul>
+                    <li>Verifies information against trusted external sources</li>
+                    <li>Examples: Vendor details against master data, tax IDs against government databases</li>
+                </ul>
+
+                <h3>Human-in-the-Loop Processing</h3>
+
+                <p>Even advanced AI systems benefit from strategic human involvement:</p>
+
+                <ol>
+                    <li><strong>Confidence Thresholds</strong>: Routing low-confidence extractions for human review</li>
+                    <li><strong>Exception Handling</strong>: Creating specialized workflows for unusual documents</li>
+                    <li><strong>Continuous Improvement</strong>: Using human corrections to retrain models</li>
+                    <li><strong>Audit Processes</strong>: Periodically reviewing system performance with human oversight</li>
+                </ol>
+
+                <h3>Quality Metrics</h3>
+
+                <p>Key performance indicators for extraction quality include:</p>
+
+                <ul>
+                    <li><strong>Field Accuracy</strong>: Percentage of correctly extracted fields</li>
+                    <li><strong>Character Error Rate</strong>: Proportion of incorrectly recognized characters</li>
+                    <li><strong>Straight-Through Processing Rate</strong>: Percentage of documents processed without human intervention</li>
+                    <li><strong>Exception Rate</strong>: Frequency of documents requiring special handling</li>
+                    <li><strong>Processing Time</strong>: End-to-end duration from document receipt to data availability</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="module-navigation">
+            <a href="module1.html" class="btn prev">Previous Module</a>
+            <a href="module3.html" class="btn next">Next Module</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

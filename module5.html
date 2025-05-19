@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5: Integrating with Productivity Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --text-color: #1f2937;
+            --light-text: #6b7280;
+            --background-color: #f9fafb;
+            --card-color: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Module Content */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: var(--light-text);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-icon {
+            font-size: 3.5rem;
+            margin-right: 2rem;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-description {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .module-meta span {
+            display: inline-flex;
+            align-items: center;
+            color: var(--light-text);
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-sidebar {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            align-self: start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-nav {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .section-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-box {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .resources-box ul {
+            list-style: none;
+        }
+
+        .resources-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .module-body {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .btn.prev {
+            background-color: var(--light-text);
+        }
+
+        .btn.next {
+            background-color: var(--success-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            
+            .module-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .module-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .module-meta {
+                justify-content: center;
+            }
+        }
+
+        /* Code block styles */
+        pre {
+            background-color: #f1f5f9;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: monospace;
+        }
+
+        code {
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Docx Builder Bootcamp</h1>
+            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+        </div>
+    </header>
+
+    <main class="container module-content">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> &gt; <span>Integrating with Productivity Tools</span>
+        </nav>
+
+        <div class="module-header">
+            <div class="module-icon">🔄</div>
+            <div class="module-info">
+                <h2>Integrating with Productivity Tools</h2>
+                <p class="module-description">Discover how to integrate AI document capabilities with Microsoft 365, Google Workspace, and other productivity platforms.</p>
+                <div class="module-meta">
+                    <span class="duration">Duration: 50 minutes</span>
+                    <span class="level">Level: Advanced</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <aside class="module-sidebar">
+                <h3>Module Sections</h3>
+                <ul class="section-nav">
+                    <li><a href="#section-1">Integration Patterns and Approaches</a></li>
+                    <li><a href="#section-2">Microsoft 365 Integration</a></li>
+                    <li><a href="#section-3">Google Workspace Integration</a></li>
+                    <li><a href="#section-4">Custom API Development</a></li>
+                </ul>
+                
+                <div class="resources-box">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Integration Patterns</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <article class="module-body">
+                <h2 id="section-1">Integration Patterns and Approaches</h2>
+
+                <p>Integrating AI document capabilities with productivity tools amplifies their value by embedding intelligence directly into users' daily workflows. Effective integration requires understanding various patterns and selecting the right approach for each use case.</p>
+
+                <h3>Integration Objectives</h3>
+
+                <p>Organizations typically pursue integration to achieve several key objectives:</p>
+
+                <ul>
+                    <li><strong>Workflow Streamlining</strong>: Reducing context switching between applications</li>
+                    <li><strong>Adoption Acceleration</strong>: Leveraging familiar interfaces to increase AI tool usage</li>
+                    <li><strong>Data Enrichment</strong>: Combining document insights with other business data</li>
+                    <li><strong>Process Automation</strong>: Creating end-to-end workflows across multiple systems</li>
+                    <li><strong>Collaboration Enhancement</strong>: Enabling teams to work together with AI-processed documents</li>
+                </ul>
+
+                <h3>Common Integration Patterns</h3>
+
+                <p>Several established patterns provide frameworks for productivity tool integration:</p>
+
+                <h4>Embedded Integration</h4>
+                <ul>
+                    <li>AI capabilities are built directly into the productivity application</li>
+                    <li><strong>Advantages</strong>: Seamless user experience, consistent interface</li>
+                    <li><strong>Challenges</strong>: Development complexity, version compatibility</li>
+                    <li><strong>Examples</strong>: Document summarization directly within email clients, classification within document management systems</li>
+                </ul>
+
+                <h4>Side-by-Side Integration</h4>
+                <ul>
+                    <li>AI tools run alongside productivity applications with contextual awareness</li>
+                    <li><strong>Advantages</strong>: Easier implementation, independent versioning</li>
+                    <li><strong>Challenges</strong>: Some context switching, potential UI inconsistencies</li>
+                    <li><strong>Examples</strong>: AI assistant panels in office suites, companion applications for content management systems</li>
+                </ul>
+
+                <h4>Service-Based Integration</h4>
+                <ul>
+                    <li>AI capabilities are exposed as services consumed by productivity applications</li>
+                    <li><strong>Advantages</strong>: Flexibility, reusability across multiple applications</li>
+                    <li><strong>Challenges</strong>: Potential latency, dependency management</li>
+                    <li><strong>Examples</strong>: Cloud-based document processing APIs, microservices for specific AI functions</li>
+                </ul>
+
+                <h4>Workflow Integration</h4>
+                <ul>
+                    <li>AI document processing is incorporated into multi-step business processes</li>
+                    <li><strong>Advantages</strong>: End-to-end automation, process optimization</li>
+                    <li><strong>Challenges</strong>: Complexity in orchestration, error handling</li>
+                    <li><strong>Examples</strong>: Document approval workflows, multi-system business processes</li>
+                </ul>
+
+                <h3>Technical Integration Approaches</h3>
+
+                <p>From a technical perspective, several mechanisms enable integration:</p>
+
+                <h4>API-Based Integration</h4>
+                <ul>
+                    <li>Using REST, GraphQL, or SOAP APIs to connect systems</li>
+                    <li>Suitable for: Cross-platform integration, service-oriented architectures</li>
+                    <li>Implementation considerations: Authentication, rate limiting, versioning</li>
+                </ul>
+
+                <h4>Webhook-Driven Integration</h4>
+                <ul>
+                    <li>Event-based triggers that initiate actions across systems</li>
+                    <li>Suitable for: Real-time processing, notification-based workflows</li>
+                    <li>Implementation considerations: Reliability, retry mechanisms, event ordering</li>
+                </ul>
+
+                <h4>Plugin/Extension Architecture</h4>
+                <ul>
+                    <li>Custom components that extend productivity tool functionality</li>
+                    <li>Suitable for: Deep UI integration, platform-specific features</li>
+                    <li>Implementation considerations: Marketplace requirements, security reviews, update management</li>
+                </ul>
+
+                <h4>Robotic Process Automation (RPA)</h4>
+                <ul>
+                    <li>Interface-level automation that mimics human interactions</li>
+                    <li>Suitable for: Legacy system integration, complex UI workflows</li>
+                    <li>Implementation considerations: UI stability, error handling, maintenance overhead</li>
+                </ul>
+
+                <h2 id="section-2">Microsoft 365 Integration</h2>
+
+                <p>Microsoft 365 offers a comprehensive ecosystem for document-centric work, with multiple integration points for AI document capabilities.</p>
+
+                <h3>Microsoft Graph API</h3>
+
+                <p>The foundation for programmatic integration with Microsoft 365:</p>
+
+                <ul>
+                    <li><strong>Capabilities</strong>: Access to documents, emails, calendar, contacts, and more</li>
+                    <li><strong>Authentication</strong>: OAuth 2.0 and Microsoft identity platform</li>
+                    <li><strong>Key Integration Points</strong>:
+                        <ul>
+                            <li>OneDrive/SharePoint document access and manipulation</li>
+                            <li>Outlook message processing and creation</li>
+                            <li>Teams message and file integration</li>
+                            <li>User and group management</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p><strong>Implementation Example</strong>:</p>
+                <pre><code># Using Microsoft Graph API to access and process documents
+import requests
+import msal
+
+def process_sharepoint_documents(tenant_id, client_id, client_secret, site_id, library_name):
+    # Authenticate with Microsoft identity platform
+    authority = f"https://login.microsoftonline.com/{tenant_id}"
+    app = msal.ConfidentialClientApplication(
+        client_id, authority=authority, client_credential=client_secret
+    )
+    
+    # Acquire token for Microsoft Graph
+    scopes = ["https://graph.microsoft.com/.default"]
+    result = app.acquire_token_for_client(scopes)
+    
+    if "access_token" in result:
+        # Use token to access SharePoint documents
+        headers = {
+            'Authorization': f"Bearer {result['access_token']}",
+            'Content-Type': 'application/json'
+        }
+        
+        # Get documents from specified library
+        endpoint = f"https://graph.microsoft.com/v1.0/sites/{site_id}/drives"
+        drives_response = requests.get(endpoint, headers=headers)
+        drives = drives_response.json()
+        
+        # Process each document (simplified example)
+        for drive in drives.get('value', []):
+            if drive['name'] == library_name:
+                items_endpoint = f"https://graph.microsoft.com/v1.0/drives/{drive['id']}/root/children"
+                items_response = requests.get(items_endpoint, headers=headers)
+                items = items_response.json()
+                
+                for item in items.get('value', []):
+                    if item['file']:
+                        # Download and process document
+                        download_url = item['@microsoft.graph.downloadUrl']
+                        document_content = requests.get(download_url).content
+                        
+                        # Apply AI processing here
+                        processed_result = ai_process_document(document_content)
+                        
+                        # Update document metadata with results
+                        update_endpoint = f"https://graph.microsoft.com/v1.0/drives/{drive['id']}/items/{item['id']}"
+                        update_data = {
+                            "fields": {
+                                "AIProcessed": "Yes",
+                                "DocumentCategory": processed_result['category'],
+                                "KeyInsights": processed_result['summary']
+                            }
+                        }
+                        requests.patch(update_endpoint, headers=headers, json=update_data)
+    
+    return "Processing complete"</code></pre>
+
+                <h3>Microsoft Power Platform</h3>
+
+                <p>Low-code/no-code integration options within the Microsoft ecosystem:</p>
+
+                <h4>Power Automate</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: Workflow automation across Microsoft and third-party services</li>
+                    <li><strong>AI Document Integration</strong>: Triggering document processing, routing based on AI insights</li>
+                    <li><strong>Key Connectors</strong>: SharePoint, OneDrive, Teams, Outlook, AI Builder</li>
+                </ul>
+
+                <h4>Power Apps</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: Custom application development with minimal coding</li>
+                    <li><strong>AI Document Integration</strong>: Building document processing interfaces, visualization of AI insights</li>
+                    <li><strong>Integration Points</strong>: Embedding document viewers, capturing document inputs</li>
+                </ul>
+
+                <h4>AI Builder</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: Pre-built AI models for Power Platform</li>
+                    <li><strong>Document Features</strong>: Form processing, text extraction, document classification</li>
+                    <li><strong>Integration Benefit</strong>: Simplified AI implementation without coding</li>
+                </ul>
+
+                <h3>Office Add-ins</h3>
+
+                <p>Extending Office applications with custom functionality:</p>
+
+                <ul>
+                    <li><strong>Supported Applications</strong>: Word, Excel, PowerPoint, Outlook</li>
+                    <li><strong>Development Approach</strong>: Web technologies (HTML, CSS, JavaScript)</li>
+                    <li><strong>Distribution</strong>: AppSource marketplace or organizational deployment</li>
+                    <li><strong>Key Integration Scenarios</strong>:
+                        <ul>
+                            <li>Document analysis within Word</li>
+                            <li>Email classification and extraction in Outlook</li>
+                            <li>Data enrichment in Excel</li>
+                            <li>Content generation for PowerPoint</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>SharePoint Framework (SPFx)</h3>
+
+                <p>Custom extensions for SharePoint and Teams:</p>
+
+                <ul>
+                    <li><strong>Component Types</strong>: Web parts, extensions, adaptive cards</li>
+                    <li><strong>Development Stack</strong>: TypeScript, React (recommended)</li>
+                    <li><strong>Integration Value</strong>: Contextual document processing within collaboration spaces</li>
+                    <li><strong>Example Use Cases</strong>: Document dashboards, intelligent search experiences, automated metadata tagging</li>
+                </ul>
+
+                <h2 id="section-3">Google Workspace Integration</h2>
+
+                <p>Google Workspace provides a cloud-native productivity suite with strong API support for AI document integration.</p>
+
+                <h3>Google Workspace APIs</h3>
+
+                <p>Comprehensive programmatic access to Google's productivity tools:</p>
+
+                <h4>Google Drive API</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: File creation, reading, updating, deletion, and metadata management</li>
+                    <li><strong>Integration Value</strong>: Accessing documents for processing, storing results</li>
+                    <li><strong>Key Features</strong>: Change notifications, permissions management, content streaming</li>
+                </ul>
+
+                <h4>Google Docs API</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: Reading and writing document content, applying formatting</li>
+                    <li><strong>Integration Value</strong>: In-place document enhancement, content generation</li>
+                    <li><strong>Key Features</strong>: Structured content access, batch updates, suggestions</li>
+                </ul>
+
+                <h4>Gmail API</h4>
+                <ul>
+                    <li><strong>Capabilities</strong>: Email access, modification, sending, and organization</li>
+                    <li><strong>Integration Value</strong>: Processing document attachments, email summarization</li>
+                    <li><strong>Key Features</strong>: Message threading, label management, draft handling</li>
+                </ul>
+
+                <p><strong>Implementation Example</strong>:</p>
+                <pre><code># Using Google Drive and Docs APIs to process documents
+from googleapiclient.discovery import build
+from google.oauth2 import service_account
+import io
+from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
+
+def process_google_docs(service_account_file, folder_id):
+    # Authenticate with service account
+    SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/documents']
+    credentials = service_account.Credentials.from_service_account_file(
+        service_account_file, scopes=SCOPES)
+    
+    # Create Drive and Docs service
+    drive_service = build('drive', 'v3', credentials=credentials)
+    docs_service = build('docs', 'v1', credentials=credentials)
+    
+    # List documents in the specified folder
+    results = drive_service.files().list(
+        q=f"'{folder_id}' in parents and mimeType='application/vnd.google-apps.document'",
+        fields="files(id, name)").execute()
+    items = results.get('files', [])
+    
+    for item in items:
+        # Get document content
+        doc = docs_service.documents().get(documentId=item['id']).execute()
+        
+        # Extract text content (simplified)
+        document_text = ""
+        for content in doc.get('body', {}).get('content', []):
+            if 'paragraph' in content:
+                for element in content['paragraph']['elements']:
+                    if 'textRun' in element:
+                        document_text += element['textRun']['content']
+        
+        # Process with AI
+        ai_results = ai_analyze_document(document_text)
+        
+        # Create a summary document
+        summary_metadata = {
+            'name': f"Summary of {item['name']}",
+            'mimeType': 'application/vnd.google-apps.document',
+            'parents': [folder_id]
+        }
+        
+        summary_file = drive_service.files().create(body=summary_metadata).execute()
+        
+        # Add content to summary document
+        requests = [
+            {
+                'insertText': {
+                    'location': {'index': 1},
+                    'text': f"AI-Generated Summary\n\n{ai_results['summary']}\n\n"
+                }
+            },
+            {
+                'insertText': {
+                    'location': {'index': 1},
+                    'text': f"Key Topics: {', '.join(ai_results['topics'])}\n\n"
+                }
+            }
+        ]
+        
+        docs_service.documents().batchUpdate(
+            documentId=summary_file['id'],
+            body={'requests': requests}).execute()
+        
+        # Add link to original document
+        drive_service.permissions().create(
+            fileId=summary_file['id'],
+            body={'type': 'user', 'role': 'writer', 'emailAddress': 'user@example.com'},
+        ).execute()
+    
+    return "Processing complete"</code></pre>
+
+                <h3>Google Apps Script</h3>
+
+                <p>JavaScript-based automation and customization for Google Workspace:</p>
+
+                <ul>
+                    <li><strong>Integration Scope</strong>: Custom functions, UI enhancements, workflow automation</li>
+                    <li><strong>Development Environment</strong>: Browser-based editor or clasp CLI</li>
+                    <li><strong>Deployment Options</strong>: Editor add-ons, web apps, custom functions</li>
+                    <li><strong>Key Benefits</strong>: Deep integration with Google Workspace, simplified authentication</li>
+                </ul>
+
+                <h3>Google Workspace Marketplace</h3>
+
+                <p>Distribution channel for Google Workspace integrations:</p>
+
+                <ul>
+                    <li><strong>Add-on Types</strong>: Editor add-ons, Drive apps, Admin apps</li>
+                    <li><strong>Development Requirements</strong>: Google Cloud project, OAuth configuration</li>
+                    <li><strong>Verification Process</strong>: Security assessment for public listings</li>
+                    <li><strong>Deployment Options</strong>: Public listing or private distribution</li>
+                </ul>
+
+                <h3>Google Chat Apps and Add-ons</h3>
+
+                <p>Conversational interfaces for document processing:</p>
+
+                <ul>
+                    <li><strong>Capabilities</strong>: Interactive messages, cards, dialogs</li>
+                    <li><strong>Integration Value</strong>: Document processing through conversational UI</li>
+                    <li><strong>Key Features</strong>: Slash commands, interactive components, webhooks</li>
+                    <li><strong>Use Cases</strong>: Document summarization on demand, collaborative document review</li>
+                </ul>
+
+                <h2 id="section-4">Custom API Development</h2>
+
+                <p>For specialized document processing needs, custom APIs provide maximum flexibility.</p>
+
+                <h3>API Design Principles</h3>
+
+                <p>Creating effective document processing APIs requires thoughtful design:</p>
+
+                <h4>RESTful Design</h4>
+                <ul>
+                    <li>Resource-oriented architecture</li>
+                    <li>Standard HTTP methods (GET, POST, PUT, DELETE)</li>
+                    <li>Consistent URL structure</li>
+                    <li>Appropriate status codes</li>
+                </ul>
+
+                <h4>GraphQL Approach</h4>
+                <ul>
+                    <li>Query-based data retrieval</li>
+                    <li>Precise specification of needed data</li>
+                    <li>Reduced network overhead</li>
+                    <li>Schema-driven development</li>
+                </ul>
+
+                <h4>API Documentation</h4>
+                <ul>
+                    <li>OpenAPI/Swagger specification</li>
+                    <li>Interactive documentation</li>
+                    <li>Code samples</li>
+                    <li>Authentication guidance</li>
+                </ul>
+
+                <h3>Deployment Options</h3>
+
+                <p>Several platforms support custom API deployment:</p>
+
+                <h4>Serverless Functions</h4>
+                <ul>
+                    <li>AWS Lambda, Azure Functions, Google Cloud Functions</li>
+                    <li>Event-driven execution</li>
+                    <li>Automatic scaling</li>
+                    <li>Pay-per-use pricing</li>
+                </ul>
+
+                <h4>Container-Based Deployment</h4>
+                <ul>
+                    <li>Docker containers on Kubernetes, ECS, or GKE</li>
+                    <li>Consistent environment across development and production</li>
+                    <li>Scalability and orchestration</li>
+                    <li>Resource isolation</li>
+                </ul>
+
+                <h4>API Management</h4>
+                <ul>
+                    <li>API gateways for security and monitoring</li>
+                    <li>Rate limiting and quotas</li>
+                    <li>Analytics and usage tracking</li>
+                    <li>Developer portals</li>
+                </ul>
+
+                <h3>Security Considerations</h3>
+
+                <p>Custom APIs require robust security measures:</p>
+
+                <ul>
+                    <li><strong>Authentication</strong>: OAuth 2.0, API keys, JWT tokens</li>
+                    <li><strong>Authorization</strong>: Role-based access control, scopes</li>
+                    <li><strong>Data Protection</strong>: TLS encryption, field-level encryption</li>
+                    <li><strong>Input Validation</strong>: Request validation, sanitization</li>
+                    <li><strong>Rate Limiting</strong>: Preventing abuse, ensuring fair usage</li>
+                    <li><strong>Logging and Monitoring</strong>: Security event tracking, anomaly detection</li>
+                </ul>
+
+                <h3>Integration Testing</h3>
+
+                <p>Ensuring reliable API operation through comprehensive testing:</p>
+
+                <ul>
+                    <li><strong>Unit Testing</strong>: Individual function validation</li>
+                    <li><strong>Integration Testing</strong>: Component interaction verification</li>
+                    <li><strong>Load Testing</strong>: Performance under expected and peak loads</li>
+                    <li><strong>Security Testing</strong>: Vulnerability assessment</li>
+                    <li><strong>Consumer-Driven Contract Testing</strong>: Validating API meets consumer expectations</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="module-navigation">
+            <a href="module4.html" class="btn prev">Previous Module</a>
+            <a href="index.html" class="btn next">Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

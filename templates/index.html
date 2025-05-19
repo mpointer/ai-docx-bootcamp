@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Docx Builder Bootcamp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AI Docx Builder Bootcamp</h1>
+            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>🔍 Overview</h2>
+            <p>The AI Docx Builder Bootcamp is a hybrid training and enablement program designed to empower teams with the skills, tools, and support to design, prototype, and scale AI-powered document solutions. Whether you're exploring AI for document classification, data extraction, summarization, or workflow collaboration, this offering provides a structured path from fundamentals to MVP.</p>
+        </section>
+
+        <section class="modules">
+            <h2>📚 Foundations On-Demand Modules</h2>
+            <div class="module-grid">
+                {% for module in modules %}
+                <div class="module-card">
+                    <div class="module-icon">{{ module.icon }}</div>
+                    <h3>{{ module.title }}</h3>
+                    <p>{{ module.description }}</p>
+                    <a href="{{ url_for('module', module_id=module.id) }}" class="btn">Start Module</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="timeline">
+            <h2>⏳ Suggested Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Week 1</h3>
+                        <p>Kickoff + Start On-Demand</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">2-5</div>
+                    <div class="timeline-content">
+                        <h3>Weeks 2-5</h3>
+                        <p>Office Hours + Assignments</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h3>Week 6</h3>
+                        <p>Final Q&A + Project Showcase</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
