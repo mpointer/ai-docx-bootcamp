@@ -3,233 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Docx Builder Bootcamp</title>
+    <title>CODA Document Ecosystem</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #4f46e5;
-            --accent-color: #8b5cf6;
-            --text-color: #1f2937;
-            --light-text: #6b7280;
-            --background-color: #f9fafb;
-            --card-color: #ffffff;
-            --border-color: #e5e7eb;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-top: 2rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* Sections */
-        section {
-            margin-bottom: 3rem;
-        }
-
-        .intro {
-            background-color: var(--card-color);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-        }
-
-        /* Module Cards */
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .module-card {
-            background-color: var(--card-color);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .module-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .module-card h3 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
-
-        .module-card p {
-            color: var(--light-text);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary-color);
-            text-decoration: none;
-        }
-
-        /* Timeline */
-        .timeline-container {
-            position: relative;
-            padding: 2rem 0;
-        }
-
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 20px;
-            width: 4px;
-            background-color: var(--border-color);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 60px;
-        }
-
-        .timeline-marker {
-            position: absolute;
-            left: 0;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .timeline-content {
-            background-color: var(--card-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--text-color);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .module-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/coda-style.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>AI Docx Builder Bootcamp</h1>
-            <p class="subtitle">From Concepts to Prototypes: Mastering AI-Powered Document Processing</p>
+            <div class="logo-container">
+                <img src="assets/coda-logo.jpg" alt="CODA Logo" class="logo">
+            </div>
+            <h1>CODA Document Ecosystem</h1>
+            <p class="subtitle">Capture, Organize, Decide, Act: The Intelligent Document Ecosystem</p>
         </div>
     </header>
 
     <main class="container">
         <section class="intro">
             <h2>🔍 Overview</h2>
-            <p>The AI Docx Builder Bootcamp is a hybrid training and enablement program designed to empower teams with the skills, tools, and support to design, prototype, and scale AI-powered document solutions. Whether you're exploring AI for document classification, data extraction, summarization, or workflow collaboration, this offering provides a structured path from fundamentals to MVP.</p>
+            <p>The CODA Document Ecosystem is a comprehensive solution designed to empower teams with the skills, tools, and support to design, prototype, and scale AI-powered document solutions. Whether you're exploring AI for document classification, data extraction, summarization, or workflow collaboration, this offering provides a structured path from fundamentals to MVP.</p>
         </section>
 
         <section class="modules">
-            <h2>📚 Foundations On-Demand Modules</h2>
+            <h2>📚 CODA.core Components</h2>
             <div class="module-grid">
                 <div class="module-card">
                     <div class="module-icon">🔍</div>
@@ -264,28 +60,28 @@
             </div>
         </section>
 
-        <section class="timeline">
-            <h2>⏳ Suggested Timeline</h2>
-            <div class="timeline-container">
-                <div class="timeline-item">
-                    <div class="timeline-marker">1</div>
-                    <div class="timeline-content">
-                        <h3>Week 1</h3>
-                        <p>Kickoff + Start On-Demand</p>
+        <section class="components">
+            <h2>🧩 Program Components</h2>
+            <div class="components-container">
+                <div class="component-item">
+                    <div class="component-marker">1</div>
+                    <div class="component-content">
+                        <h3>Foundations</h3>
+                        <p>CODA.core Components</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker">2-5</div>
-                    <div class="timeline-content">
-                        <h3>Weeks 2-5</h3>
-                        <p>Office Hours + Assignments</p>
+                <div class="component-item">
+                    <div class="component-marker">2</div>
+                    <div class="component-content">
+                        <h3>Support</h3>
+                        <p>CODA.bins Implementation</p>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker">6</div>
-                    <div class="timeline-content">
-                        <h3>Week 6</h3>
-                        <p>Final Q&A + Project Showcase</p>
+                <div class="component-item">
+                    <div class="component-marker">3</div>
+                    <div class="component-content">
+                        <h3>Implementation</h3>
+                        <p>CODA.vaults Configuration & CODA.agents Deployment</p>
                     </div>
                 </div>
             </div>
@@ -294,7 +90,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 AI Docx Builder Bootcamp. All rights reserved.</p>
+            <p>&copy; 2025 CODA Document Ecosystem. All rights reserved.</p>
         </div>
     </footer>
 </body>

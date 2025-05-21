@@ -1,7 +1,7 @@
-# AI Docx Builder Bootcamp - Project Summary
+# CODA Document Ecosystem - Project Summary
 
 ## Project Overview
-The AI Docx Builder Bootcamp is a comprehensive training program designed to equip professionals with practical skills in AI-powered document processing. This project was developed for Innova Solutions to enable their sales team to pitch AI document processing expertise as a valuable skill set to potential clients.
+The CODA Document Ecosystem is a comprehensive training program designed to equip professionals with practical skills in AI-powered document processing. This project was developed for Innova Solutions to enable their sales team to pitch AI document processing expertise as a valuable skill set to potential clients.
 
 ## Project Components
 
@@ -55,5 +55,5 @@ Professional presentation materials for Innova Solutions' sales team, including:
 
 ## Contact
 For any questions or support regarding this project, please contact:
-- Email: ai.bootcamp@innovasolutions.com
+- Email: ai.ecosystem@innovasolutions.com
 - Phone: (555) 123-4567

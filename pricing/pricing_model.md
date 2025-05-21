@@ -1,29 +1,28 @@
-# AI Docx Builder Bootcamp - Pricing Model
+# CODA Document Ecosystem - Pricing Model
 
 ## Overview
-This document outlines the pricing structure for the AI Docx Builder Bootcamp, designed to provide comprehensive training on AI-powered document processing. The pricing model is based on competitive market research and structured to offer value at multiple entry points.
+This document outlines the pricing structure for the CODA Document Ecosystem, designed to provide comprehensive training on AI-powered document processing. The pricing model is based on competitive market research and structured to offer value at multiple entry points.
 
 ## Market Research Findings
 Based on our research of comparable AI training programs:
 - Individual AI courses typically range from $500 to $15,000
 - Corporate training packages typically range from $12,000 to $250,000
-- Specialized AI bootcamps range from $3,500 to $13,950
-- Program duration varies from 6 weeks to 9 months
+- Specialized AI ecosystems range from $3,500 to $13,950
 
 ## Pricing Tiers
 
 ### Individual Pricing
 
-#### Basic Tier: Self-Paced Learning
+#### CODA.core: Ecosystem Foundation
 - **Price: $1,495**
 - **Includes:**
-  - Access to all 5 Foundations On-Demand modules
+  - Access to all 5 CODA.core components
   - Basic exercises and quizzes
   - 3-month access to learning platform
   - Digital certificate of completion
   - Community forum access
 
-#### Professional Tier: Guided Learning
+#### CODA.bins: Specialized Implementation
 - **Price: $2,995**
 - **Includes:**
   - Everything in Basic Tier
@@ -33,7 +32,7 @@ Based on our research of comparable AI training programs:
   - Email support
   - Advanced exercises and case studies
 
-#### Expert Tier: Comprehensive Learning
+#### CODA.vaults + CODA.agents: Complete Solution
 - **Price: $4,995**
 - **Includes:**
   - Everything in Professional Tier
@@ -47,10 +46,10 @@ Based on our research of comparable AI training programs:
 
 ### Corporate Pricing
 
-#### Team Tier (5-10 participants)
+#### Team Ecosystem (5-10 participants)
 - **Price: $12,500**
 - **Includes:**
-  - Access to all 5 Foundations On-Demand modules for each participant
+  - Access to all 5 CODA.core components for each participant
   - 4 live office hours sessions per month
   - 3 hands-on builder assignments with detailed feedback
   - 10 hours of shared block support
@@ -59,20 +58,20 @@ Based on our research of comparable AI training programs:
   - Custom case studies relevant to your industry
   - Team progress reports
 
-#### Department Tier (11-25 participants)
+#### Department Ecosystem (11-25 participants)
 - **Price: $25,000**
 - **Includes:**
-  - Everything in Team Tier
+  - Everything in Team Ecosystem
   - 8 live office hours sessions per month
   - 20 hours of shared block support
   - Custom implementation roadmap
   - 2 executive briefing sessions
   - Quarterly progress reviews
 
-#### Enterprise Tier (26-50 participants)
+#### Enterprise Ecosystem (26-50 participants)
 - **Price: $45,000**
 - **Includes:**
-  - Everything in Department Tier
+  - Everything in Department Ecosystem
   - 12 live office hours sessions per month
   - 40 hours of shared block support
   - Custom curriculum adjustments
@@ -106,14 +105,14 @@ Based on our research of comparable AI training programs:
 ### Corporate Plans
 - Full payment upfront (10% discount)
 - Quarterly payments (no additional fee)
-- Custom payment schedule available for Enterprise Tier
+- Custom payment schedule available for Enterprise Ecosystem
 
 ## Comparison with Competitors
 
 | Feature | AI Docx Builder | Competitor A | Competitor B | Competitor C |
 |---------|----------------|--------------|--------------|--------------|
 | Base Price | $1,495 | $3,500 | $6,000 | $9,000 |
-| Duration | Flexible | 6 weeks | 13 weeks | 9 months |
+| Access Model | Flexible | Fixed | Fixed | Fixed |
 | Live Sessions | Yes (Pro+) | Limited | Yes | Yes |
 | Hands-on Projects | Yes (Pro+) | Yes | Yes | Yes |
 | Document-Specific Focus | High | Low | Medium | Medium |
@@ -121,15 +120,15 @@ Based on our research of comparable AI training programs:
 | Customization | Yes | No | Limited | Limited |
 
 ## Value Proposition
-The AI Docx Builder Bootcamp offers specialized training focused specifically on document processing with AI, providing:
+The CODA Document Ecosystem offers specialized training focused specifically on document processing with AI, providing:
 1. Targeted skills that can be immediately applied in business contexts
 2. Flexible learning options to accommodate different schedules and learning styles
 3. Practical, hands-on experience with real-world document processing scenarios
 4. Scalable options for both individuals and organizations
-5. Significantly lower cost than general AI bootcamps while maintaining focus on high-value document processing skills
+5. Significantly lower cost than general AI ecosystems while maintaining focus on high-value document processing skills
 
 ## Recommended Pricing Strategy for Innova Solutions
-For Innova Solutions' sales team, we recommend positioning the Department Tier ($25,000) as the primary offering, with the following key selling points:
+For Innova Solutions' sales team, we recommend positioning the Department Ecosystem ($25,000) as the primary offering, with the following key selling points:
 1. Comprehensive training for up to 25 team members
 2. Customized to document processing needs specific to client industries
 3. Ongoing support to ensure successful implementation
